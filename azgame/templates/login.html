@@ -1,18 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <title>Login AZ Game</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Signin Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="static/signin.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
 </head>
+
 <body>
-    {% for message in get_flashed_messages() %}
-        <div class=flash>{{ message }}</div>
-    {% endfor %}
-    <form action="" method="post">
-        <p><label>Username</label><input title="username" type=text name=username></p>
-        <p><label>Password</label><input title="password" type=password name=password></p>
-        <p><input type=submit value=Login></p>
+
+<div class="container">
+
+    <form class="form-signin panel panel-default" method="post" , action="">
+        <div class="panel-heading">
+            <h4 class="form-signin-heading">Sign in</h4>
+        </div>
+        <div class="panel-body">
+            {% for message in get_flashed_messages() %}
+            <div class="alert alert-warning alert-dismissible flash" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <strong>Warning!</strong> {{ message }}
+            </div>
+            {% endfor %}
+            <label for="inputEmail" class="sr-only">Email address</label>
+            <input type="email" id="inputEmail" class="form-control" placeholder="Email address" name="email" required
+                   autofocus>
+            <label for="inputPassword" class="sr-only">Password</label>
+            <input type="password" id="inputPassword" class="form-control" placeholder="Password" name="password"
+                   required>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+            <a class="btn btn-link" href="/signup">Sign up >></a>
+        </div>
     </form>
-    <a href="signup">Sign up</a>
+
+</div> <!-- /container -->
 </body>
 </html>
+
+
+<!--<form action="" method="post">-->
+<!--<p><label>Username</label><input title="username" type=text name=username></p>-->
+<!--<p><label>Password</label><input title="password" type=password name=password></p>-->
+<!--<p><input type=submit value=Login></p>-->
+<!--</form>-->
+<!--<a href="signup">Sign up</a>-->

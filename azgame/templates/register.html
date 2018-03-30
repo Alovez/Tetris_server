@@ -1,17 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <title>Regist AZ Game</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Sign Up Your AZ Game Account</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="static/signup.css" rel="stylesheet">
+    <![endif]-->
 </head>
+
 <body>
-    <form action="" method="post">
-        <p>{{ response_message }}</p>
-        <p><label>Username</label><input title="username" type=text name=username></p>
-        <p><label>Password</label><input title="password" type=password name=password></p>
-        <p><label>Password Confirm</label><input title="password_confirm" type="password" name="password_confirm"></p>
-        <p><input type=submit value=Register></p>
+
+<div class="container">
+    <form class="form-signin panel panel-default" action="" method="post">
+        <div class="panel-heading">
+            <h4 class="form-signin-heading">Sign Up</h4>
+        </div>
+        <div class="panel-body">
+            {% for message in get_flashed_messages() %}
+            <div class=flash><p class="bg-info">{{ message }}</p></div>
+            {% endfor %}
+
+            <label for="inputEmail" class="sr-only">Email address</label>
+            <input type="email" id="inputEmail" class="form-control" placeholder="Email address" name="email" required
+                   autofocus>
+            <label for="inputUsername" class="sr-only">Email address</label>
+            <input type="text" id="inputUsername" class="form-control" placeholder="Nick Name" name="nick" required>
+            <label for="inputPassword" class="sr-only">Password</label>
+            <input type="password" id="inputPassword" class="form-control" placeholder="Password" name="password"
+                   required>
+            <label for="inputPasswordConfirm" class="sr-only">Password</label>
+            <input type="password" id="inputPasswordConfirm" class="form-control" placeholder="Password Confirm"
+                   name="password_confirm" required>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+            <a class="btn btn-link" href="/login">Sign in >></a>
+        </div>
     </form>
-    <a href="login">Login</a>
+
+</div> <!-- /container -->
 </body>
 </html>

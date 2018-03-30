@@ -1,9 +1,9 @@
 drop table if exists auth_user;
 create table auth_user (
   id integer primary key autoincrement,
-  user_name text not null,
-  password text not null,
-  cookie_sign text
+  email text not null,
+  nickname text not null,
+  password text not null
 );
 
 drop table if exists user_score;
