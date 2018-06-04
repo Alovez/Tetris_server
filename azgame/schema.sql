@@ -25,3 +25,8 @@ create table game_mapping (
 INSERT into game_mapping VALUES (1, 'Flappy Bird');
 INSERT into game_mapping VALUES (2, '2048');
 INSERT into game_mapping VALUES (3, 'Tetris');
+
+create table DQN_info (
+  id integer primary key autoincrement,
+  game_state text not null
+)

@@ -5,6 +5,9 @@ from flask import Flask, request, session, g, redirect, url_for, abort, \
 
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, timedelta
+from flask.ext.redis import FlaskRedis
+import uuid
+import json
 
 app = Flask(__name__)  # type:Flask
 app.config.from_object(__name__)  # load config from this file , flaskr.py
@@ -14,12 +17,14 @@ app.config.update(dict(
     DATABASE=os.path.join(app.root_path, 'flaskr.db'),
     SECRET_KEY='development key',
     USERNAME='admin',
-    PASSWORD='default'
+    PASSWORD='default',
+    REDIS_URL = "redis://localhost:6379/0"
 ))
 app.config.from_envvar('FLASKR_SETTINGS', silent=True)
 
 app.permanent_session_lifetime = timedelta(seconds=60 * 60 * 24 * 15)
 
+redis_store = FlaskRedis(app)
 
 def connect_db():
     """Connects to the specific database."""
@@ -61,7 +66,7 @@ def initdb_command():
 @app.route('/')
 def index():
     if 'user' in session:
-        return 'Logged in as %s' % escape(session['user']) + """<a href="/logout">Logout</a>"""
+        return render_template('index.html')
     return redirect(url_for('login'))
     # db = get_db()
     # cur = db.execute('select title, text from entries order by id desc')
@@ -135,6 +140,28 @@ def list_user():
     else:
         return jsonify({"status": 'failed'})
 
+@app.route('/save_status', methods=['GET', 'POST'])
+def save_status():
+    data = json.loads(request.data)
+    print(data)
+    dqn_id = data.get('dqn_id')
+
+    redis_store.set(dqn_id, json.dumps(data))
+    redis_store.set('active_dqn_id', dqn_id)
+    response = make_response(jsonify({'success': True, "dqn_id": dqn_id}))
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Methods'] = 'POST'
+    response.headers['Access-Control-Allow-Headers'] = 'x-requested-with,content-type'
+
+    return response
+
+
+
+@app.route('/get_status', methods=['GET'])
+def get_status():
+    dqn_id = redis_store.get('active_dqn_id')
+    data = redis_store.get(dqn_id)
+    return jsonify(json.loads(data))
 
 if __name__ == '__main__':
     app.run()
